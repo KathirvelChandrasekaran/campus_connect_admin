@@ -13,6 +13,7 @@ class NewsFeedScreen extends StatefulWidget {
 
 class _NewsFeedScreenState extends State<NewsFeedScreen> {
   List<dynamic>? students;
+  bool isDataLoaded = false;
 
   @override
   void initState() {
@@ -21,8 +22,14 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
   }
 
   getDetails() async {
+    setState(() {
+      isDataLoaded = true;
+    });
     var res = await supabase.from('students').select().execute();
     students = res.data;
+    setState(() {
+      isDataLoaded = false;
+    });
   }
 
   @override
@@ -50,7 +57,9 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                   style: Theme.of(context).textTheme.headline4,
                 ),
               ),
-              _createDataTable(),
+              isDataLoaded
+                  ? const Center(child: LinearProgressIndicator())
+                  : _createDataTable(),
             ],
           ),
         );
