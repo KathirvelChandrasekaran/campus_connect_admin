@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:campus_connect_admin/models/students.dart';
+import 'package:campus_connect_admin/utils/constants.dart';
 import 'package:campus_connect_admin/widgets/rounded_button_widget.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
@@ -20,6 +21,7 @@ class _UploadStudentScreenState extends State<UploadStudentScreen> {
   bool _loadingPath = false;
   bool _isFileSelected = false;
   List<Students>? stdLists;
+  dynamic stdSets;
 
   void _openFileExplorer() async {
     setState(() => _loadingPath = true);
@@ -50,9 +52,7 @@ class _UploadStudentScreenState extends State<UploadStudentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        title: Text('Upload Student'.toUpperCase()),
-      ),
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: ListView(
@@ -68,7 +68,16 @@ class _UploadStudentScreenState extends State<UploadStudentScreen> {
                 ? RoundedButtonWidget(
                     buttonText: "Upload Student details",
                     width: MediaQuery.of(context).size.width * 0.80,
-                    onpressed: _openFileExplorer,
+                    onpressed: () async {
+                      await supabase.from('students').insert([
+                        for (var i = 0; i < stdLists!.length; i++)
+                          {
+                            'roll_number': stdLists![i].rollnumber,
+                            'email_id': stdLists![i].emailid,
+                          }
+                      ]).execute();
+                      Navigator.pop(context);
+                    },
                   )
                 : RoundedButtonWidget(
                     buttonText: "Select csv file",
@@ -77,7 +86,7 @@ class _UploadStudentScreenState extends State<UploadStudentScreen> {
                   ),
             const SizedBox(height: 20),
             _loadingPath
-                ? LinearProgressIndicator()
+                ? const LinearProgressIndicator()
                 : _isFileSelected
                     ? _createDataTable()
                     : Container(),
