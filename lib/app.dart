@@ -2,6 +2,7 @@ import 'package:campus_connect_admin/screens/home_screen.dart';
 import 'package:campus_connect_admin/screens/login_screen.dart';
 import 'package:campus_connect_admin/screens/settings_screen.dart';
 import 'package:campus_connect_admin/screens/splash_screen.dart';
+import 'package:campus_connect_admin/screens/updload_student_screen.dart';
 import 'package:campus_connect_admin/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,6 +25,7 @@ class CampusConnectAdmin extends StatelessWidget {
             '/login': (context) => const LoginScreen(),
             '/home': (context) => const HomeScreen(),
             '/settings': (context) => const SettingsScreen(),
+            '/add_students': (context) => const UploadStudentScreen(),
           },
         );
       },

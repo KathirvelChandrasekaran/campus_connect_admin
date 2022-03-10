@@ -20,11 +20,14 @@ ThemeData lightTheme = ThemeData(
     ),
     centerTitle: true,
     iconTheme: IconThemeData(
-      color: Color(0XFFE3F6FD),
+      color: Colors.black,
     ),
   ),
   primaryTextTheme: Typography(platform: TargetPlatform.android).black,
   textTheme: Typography(platform: TargetPlatform.android).black,
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(
+    backgroundColor: Colors.black,
+  ),
 );
 
 ThemeData darkTheme = ThemeData(
@@ -50,6 +53,9 @@ ThemeData darkTheme = ThemeData(
   ),
   primaryTextTheme: Typography(platform: TargetPlatform.android).white,
   textTheme: Typography(platform: TargetPlatform.android).white,
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(
+    backgroundColor: Color(0XFFE3F6FD),
+  ),
 );
 
 class ThemeNotifer extends ChangeNotifier {
