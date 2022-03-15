@@ -35,12 +35,13 @@ class _UploadStudentScreenState extends State<UploadStudentScreen> {
           .transform(const CsvToListConverter())
           .toSet();
 
-      final data = fields.skip(1).map((e) => Students(e[0], e[1]));
+      final data = fields.skip(1).map((e) => Students(e[0], e[1], e[2]));
       setState(() {
         stdLists = data.toList();
         _isFileSelected = true;
         _loadingPath = false;
       });
+      FilePicker.platform.clearTemporaryFiles();
     }
     if (!mounted) return;
     setState(() {
@@ -74,6 +75,7 @@ class _UploadStudentScreenState extends State<UploadStudentScreen> {
                           {
                             'roll_number': stdLists![i].rollnumber,
                             'email_id': stdLists![i].emailid,
+                            'department': stdLists![i].department,
                           }
                       ]).execute();
                       Navigator.pop(context);
@@ -88,7 +90,10 @@ class _UploadStudentScreenState extends State<UploadStudentScreen> {
             _loadingPath
                 ? const LinearProgressIndicator()
                 : _isFileSelected
-                    ? _createDataTable()
+                    ? SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: _createDataTable(),
+                      )
                     : Container(),
           ],
         ),
@@ -102,8 +107,9 @@ class _UploadStudentScreenState extends State<UploadStudentScreen> {
 
   List<DataColumn> _createColumns() {
     return [
-      const DataColumn(label: Text('Roll number')),
-      const DataColumn(label: Text('Email ID'))
+      const DataColumn(label: Text('Roll no')),
+      const DataColumn(label: Text('Email ID')),
+      const DataColumn(label: Text('Dept.'))
     ];
   }
 
@@ -111,7 +117,8 @@ class _UploadStudentScreenState extends State<UploadStudentScreen> {
     return stdLists!
         .map((students) => DataRow(cells: [
               DataCell(Text(students.rollnumber.toString())),
-              DataCell(Text(students.emailid.toString()))
+              DataCell(Text(students.emailid.toString())),
+              DataCell(Text(students.department.toString()))
             ]))
         .toList();
   }
