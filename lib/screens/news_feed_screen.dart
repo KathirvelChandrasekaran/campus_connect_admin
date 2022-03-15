@@ -16,6 +16,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
   bool isDataLoaded = false;
   bool isDepartmentsLoaded = false;
   List<dynamic>? departments;
+  bool isFilterOn = false;
 
   @override
   void initState() {
@@ -53,15 +54,28 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
         final theme = ref.watch(themingNotifer);
 
         return Scaffold(
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/add_students');
-            },
-            child: Icon(
-              FluentIcons.add_circle_24_filled,
-              color: theme.darkTheme ? Colors.black : Colors.white,
-            ),
-          ),
+          floatingActionButton: isFilterOn
+              ? FloatingActionButton(
+                  onPressed: () {
+                    getDetails();
+                    setState(() {
+                      isFilterOn = false;
+                    });
+                  },
+                  child: Icon(
+                    FluentIcons.filter_dismiss_20_filled,
+                    color: theme.darkTheme ? Colors.black : Colors.white,
+                  ),
+                )
+              : FloatingActionButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/add_students');
+                  },
+                  child: Icon(
+                    FluentIcons.add_circle_24_filled,
+                    color: theme.darkTheme ? Colors.black : Colors.white,
+                  ),
+                ),
           body: ListView(
             children: [
               Container(
@@ -107,6 +121,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                                                 .execute();
                                             setState(() {
                                               students = res.data;
+                                              isFilterOn = true;
                                             });
                                             Navigator.pop(context);
                                           },
@@ -125,7 +140,17 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                       label: const Text('Filter by Department'),
                     ),
                     TextButton.icon(
-                      onPressed: () {},
+                      onPressed: () async {
+                        var res = await supabase
+                            .from('students')
+                            .select()
+                            .order('roll_number', ascending: false)
+                            .execute();
+                        setState(() {
+                          students = res.data;
+                          isFilterOn = true;
+                        });
+                      },
                       icon: const Icon(
                         FluentIcons.number_row_24_filled,
                         size: 24.0,
