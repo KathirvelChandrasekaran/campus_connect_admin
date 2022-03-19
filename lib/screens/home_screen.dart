@@ -1,5 +1,6 @@
 import 'package:campus_connect_admin/screens/news_feed_screen.dart';
 import 'package:campus_connect_admin/screens/profile_screen.dart';
+import 'package:campus_connect_admin/screens/search_screen.dart';
 import 'package:campus_connect_admin/utils/theme.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var _currentIndex = 0;
   final List<Widget> _screens = [
     const NewsFeedScreen(),
+    const SearchScreen(),
     const ProfileScreen(),
   ];
 
@@ -33,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
             actions: [
               IconButton(
                 icon: Icon(
-                  FluentIcons.badge_24_regular,
+                  FluentIcons.alert_24_filled,
                   color: theme.darkTheme
                       ? Theme.of(context).primaryColor
                       : Colors.black,
@@ -64,6 +66,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: const Icon(FluentIcons.broad_activity_feed_24_regular),
                 title: const Text("Activity"),
                 selectedColor: Colors.purple,
+              ),
+              SalomonBottomBarItem(
+                icon: const Icon(FluentIcons.search_square_24_filled),
+                title: const Text("Search"),
+                selectedColor: Colors.blue,
               ),
               SalomonBottomBarItem(
                 icon: const Icon(
