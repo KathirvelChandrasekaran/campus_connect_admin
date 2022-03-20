@@ -4,12 +4,16 @@ class RoundedButtonWidget extends StatelessWidget {
   final String buttonText;
   final double width;
   final Function onpressed;
+  final Color backgroundColor;
+  final Color textColor;
 
   const RoundedButtonWidget({
     Key? key,
     required this.buttonText,
     required this.width,
     required this.onpressed,
+    required this.backgroundColor,
+    required this.textColor,
   }) : super(key: key);
 
   @override
@@ -23,7 +27,7 @@ class RoundedButtonWidget extends StatelessWidget {
             blurRadius: 5.0,
           )
         ],
-        color: Theme.of(context).colorScheme.secondary,
+        color: backgroundColor,
         borderRadius: BorderRadius.circular(15),
       ),
       child: ElevatedButton(
@@ -48,10 +52,10 @@ class RoundedButtonWidget extends StatelessWidget {
           ),
           child: Text(
             buttonText,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
               // fontWeight: FontWeight.w700,
-              color: Colors.black,
+              color: textColor,
             ),
           ),
         ),

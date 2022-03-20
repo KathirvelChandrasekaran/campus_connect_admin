@@ -120,6 +120,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   buttonText: "Send Login Link",
                   width: MediaQuery.of(context).size.width * 0.80,
                   onpressed: _signIn,
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  textColor: Colors.black,
                 ),
                 const SizedBox(height: 30),
                 _emailController.text.isNotEmpty

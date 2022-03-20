@@ -80,11 +80,15 @@ class _UploadStudentScreenState extends State<UploadStudentScreen> {
                       ]).execute();
                       Navigator.pop(context);
                     },
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                    textColor: Colors.black,
                   )
                 : RoundedButtonWidget(
                     buttonText: "Select csv file",
                     width: MediaQuery.of(context).size.width * 0.80,
                     onpressed: _openFileExplorer,
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                    textColor: Colors.black,
                   ),
             const SizedBox(height: 20),
             _loadingPath

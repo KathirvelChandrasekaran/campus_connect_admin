@@ -111,6 +111,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     buttonText: "Search Students",
                     width: MediaQuery.of(context).size.width * 0.90,
                     onpressed: getSearchResults,
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                    textColor: Colors.white,
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -134,6 +136,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                             student['roll_number'],
                                             style: const TextStyle(
                                               color: Colors.black,
+                                              fontWeight: FontWeight.w600,
                                             ),
                                           ),
                                           subtitle: Text(
@@ -149,6 +152,85 @@ class _SearchScreenState extends State<SearchScreen> {
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
+                                          onTap: () {
+                                            showModalBottomSheet(
+                                              context: context,
+                                              enableDrag: true,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                              ),
+                                              elevation: 2,
+                                              builder: (context) {
+                                                return SizedBox(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.25,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Center(
+                                                        child:
+                                                            RoundedButtonWidget(
+                                                          buttonText:
+                                                              "View Student",
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.90,
+                                                          onpressed: () {},
+                                                          backgroundColor:
+                                                              Colors.black,
+                                                          textColor:
+                                                              Colors.white,
+                                                        ),
+                                                      ),
+                                                      Center(
+                                                        child:
+                                                            RoundedButtonWidget(
+                                                          buttonText:
+                                                              "Delete Student",
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.90,
+                                                          onpressed: () async {
+                                                            await supabase
+                                                                .from(
+                                                                    'students')
+                                                                .delete()
+                                                                .eq(
+                                                                    'email_id',
+                                                                    student[
+                                                                        'email_id'])
+                                                                .execute();
+                                                            getSearchResults();
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                          backgroundColor:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .error,
+                                                          textColor:
+                                                              Colors.white,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
                                         ),
                                       ),
                                       const SizedBox(height: 10),

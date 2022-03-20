@@ -117,9 +117,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: RoundedButtonWidget(
-                    buttonText: "Logout",
-                    width: MediaQuery.of(context).size.width * 0.80,
-                    onpressed: _signOut),
+                  buttonText: "Logout",
+                  width: MediaQuery.of(context).size.width * 0.80,
+                  onpressed: _signOut,
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  textColor: Colors.black,
+                ),
               ),
             ],
           ),
